@@ -9,13 +9,15 @@ class Day1 : public DayInterface
 public:
 	Day1();
 
-	~Day1() = default;
+	~Day1() override = default;
 
 	size_t part1() override;
 
 	size_t part2() override;
 
 private:
-	std::vector<std::string> mData{};
+	std::vector<int> mLList{};
+
+	std::vector<int> mRList{};
 };
 

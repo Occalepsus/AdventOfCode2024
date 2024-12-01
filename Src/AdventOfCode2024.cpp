@@ -8,5 +8,5 @@ int main()
 {
     DAY_CLASS day{};
 
-    std::cout << "Resultat : " << day.part1() << "\n";
+    std::cout << "Resultat : " << day.part2() << "\n";
 }
