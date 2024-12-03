@@ -1,5 +1,6 @@
 #include "DayXX.h"
 
+#include <iostream>
 #include "Utilities.h"
 
 DayXX::DayXX()
@@ -9,14 +10,14 @@ DayXX::DayXX()
 
 size_t DayXX::part1()
 {
-	size_t res{ 0 };
+	size_t lRes{ 0 };
 
-	return res;
+	return lRes;
 }
 
 size_t DayXX::part2()
 {
-	size_t res{ 0 };
+	size_t lRes{ 0 };
 
-	return res;
+	return lRes;
 }
