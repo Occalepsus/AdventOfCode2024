@@ -2,14 +2,14 @@
 
 #include "DayInterface.h"
 
-#define DAY_CLASS DayXX
+#define DAY_CLASS Day5
 
-class DayXX : public DayInterface
+class Day5 : public DayInterface
 {
 public:
-	DayXX();
+	Day5();
 
-	~DayXX() override = default;
+	~Day5() override = default;
 
 	size_t part1() override;
 
