@@ -44,35 +44,35 @@ size_t Day2::part2()
 {
 	size_t res{ 0 };
 
-	for (std::list<int> const& lList : mData)
-	{
-		auto lErrIt{ checkErr(lListCpy) };
-		if (lErrIt == lListCpy.end())
-		{
-			res++;
-		}
-		else
-		{
+	//for (std::list<int> const& lList : mData)
+	//{
+	//	auto lErrIt{ checkErr(lListCpy) };
+	//	if (lErrIt == lListCpy.end())
+	//	{
+	//		res++;
+	//	}
+	//	else
+	//	{
 
 
 
-			int lFstElt{ lListCpy.front() };
-			lListCpy.erase(lListCpy.begin());
+	//		int lFstElt{ lListCpy.front() };
+	//		lListCpy.erase(lListCpy.begin());
 
-			if (checkErr(lListCpy) == lListCpy.end())
-			{
-				res++;
-				continue;
-			}
+	//		if (checkErr(lListCpy) == lListCpy.end())
+	//		{
+	//			res++;
+	//			continue;
+	//		}
 
-			lListCpy.erase(lErrIt);
-			lListCpy.push_front(lFstElt);
-			if (checkErr(lListCpy) == lListCpy.end())
-			{
-				res++;
-			}
-		}
-	}
+	//		lListCpy.erase(lErrIt);
+	//		lListCpy.push_front(lFstElt);
+	//		if (checkErr(lListCpy) == lListCpy.end())
+	//		{
+	//			res++;
+	//		}
+	//	}
+	//}
 
 	return res;
 }
