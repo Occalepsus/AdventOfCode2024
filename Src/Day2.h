@@ -20,6 +20,8 @@ public:
 private:
 	std::vector<std::list<int>> mData{};
 
-	std::list<int>::const_iterator checkErr(std::list<int> const& lList) const;
+	std::list<int>::const_iterator checkErr(std::list<int> const& pList) const;
+
+	std::list<int>::const_iterator checkErrOrdered(std::list<int> const& pList, bool pIncr = true) const;
 };
 
