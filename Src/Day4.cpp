@@ -15,7 +15,7 @@ Day4::Day4()
 	auto lIt{ mFoundImage.begin() };
 	for (;;)
 	{
-		if (std::distance(lIt, mFoundImage.end()) > mWidth)
+		if (static_cast<size_t>(std::distance(lIt, mFoundImage.end())) > mWidth)
 		{
 			lIt += mWidth;
 		}

@@ -32,4 +32,6 @@ private:
 	std::vector<Equation> mEquations{};
 
 	bool checkEquation(Equation const& pEquation) const;
+
+	bool checkEquation2(Equation const& pEquation) const;
 };

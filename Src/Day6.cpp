@@ -81,13 +81,13 @@ bool Day6::getNextPosition(std::string const& pGrid, int& pCurIdx, EDir& pCurDir
 	switch (pCurDir)
 	{
 	case EDir::UP:
-		lNextIdx -= (mWidth + 1);
+		lNextIdx -= (static_cast<int>(mWidth) + 1);
 		break;
 	case EDir::RIGHT:
 		lNextIdx++;
 		break;
 	case EDir::DOWN:
-		lNextIdx += (mWidth + 1);
+		lNextIdx += (static_cast<int>(mWidth) + 1);
 		break;
 	case EDir::LEFT:
 		lNextIdx--;

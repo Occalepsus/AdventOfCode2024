@@ -43,6 +43,14 @@ size_t Day7::part1()
 size_t Day7::part2()
 {
 	size_t lRes{ 0 };
+	
+	for (auto const& lEquation : mEquations)
+	{
+		if (checkEquation2(lEquation))
+		{
+			lRes += lEquation.mRes;
+		}
+	}
 
 	return lRes;
 }
@@ -52,6 +60,10 @@ bool Day7::checkEquation(Equation const& pEquation) const
 	if (pEquation.mValues.size() <= 1)
 	{
 		return pEquation.mRes == pEquation.mValues.front();
+	}
+	else if (pEquation.mValues.front() > pEquation.mRes)
+	{
+		return false;
 	}
 
 	Equation lAddEquation{ pEquation };
@@ -67,4 +79,32 @@ bool Day7::checkEquation(Equation const& pEquation) const
 	lMulEquation.mValues.push_front(lA * lB);
 
 	return checkEquation(lAddEquation) || checkEquation(lMulEquation);
+}
+
+bool Day7::checkEquation2(Equation const& pEquation) const
+{
+	if (pEquation.mValues.size() <= 1)
+	{
+		return pEquation.mRes == pEquation.mValues.front();
+	}
+	else if (pEquation.mValues.front() > pEquation.mRes)
+	{
+		return false;
+	}
+
+	Equation lAddEquation{ pEquation };
+
+	size_t lA{ lAddEquation.mValues.front() };
+	lAddEquation.mValues.pop_front();
+	size_t lB{ lAddEquation.mValues.front() };
+	lAddEquation.mValues.pop_front();
+
+	Equation lMulEquation{ lAddEquation };
+	Equation lConcatEquation{ lAddEquation };
+
+	lAddEquation.mValues.push_front(lA + lB);
+	lMulEquation.mValues.push_front(lA * lB);
+	lConcatEquation.mValues.push_front(Utilities::concatNumbers(lA, lB));
+
+	return checkEquation2(lAddEquation) || checkEquation2(lMulEquation) || checkEquation2(lConcatEquation);
 }
