@@ -32,9 +32,13 @@ private:
 
 	std::string mFoundImage{};
 
+	static char getDirChar(EDir pDir);
+
 	bool getNextPosition(std::string const& pGrid, int& pCurIdx, EDir& pCurDir) const;
 
 	void travelGrid(std::string& pGrid) const;
+
+	bool travelGridAndCheckLoop(std::string& pGrid, int pCurIdx, EDir pCurDir) const;
 
 	inline size_t countVisited() const;
 };

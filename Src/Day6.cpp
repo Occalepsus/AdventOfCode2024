@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Utilities.h"
 
+#include <map>
+#include <set>
+
 Day6::Day6()
 {
 	mGrid = Utilities::getFileAsRaw("input/Day6.txt");
@@ -22,9 +25,53 @@ size_t Day6::part1()
 
 size_t Day6::part2()
 {
-	size_t lRes{ 0 };
+	std::set<int> lObstaclesPos{};
 
-	return lRes;
+	int lCurIdx{ static_cast<int>(mGrid.find('^')) };
+	int lNextIdx{ lCurIdx };
+
+	EDir lCurDir{ EDir::UP };
+
+	while (getNextPosition(mGrid, lNextIdx, lCurDir))
+	{
+		// If move, copy grid and place obstacle in next visited position (that means dir is not modified)
+		if (lNextIdx != lCurIdx && mGrid[lNextIdx == '.'] && lObstaclesPos.find(lNextIdx) == lObstaclesPos.end())
+		{
+			std::string lGridCopy{ mGrid };
+			lGridCopy[lNextIdx] = 'O';
+
+			// If no obstacles were placed at this position and loop is found, add it to the set
+			if (travelGridAndCheckLoop(lGridCopy, lCurIdx, lCurDir))
+			{
+				lObstaclesPos.insert(lNextIdx);
+
+				//std::cout << lGridCopy << "\n\n";
+			}
+		}
+
+		lCurIdx = lNextIdx;
+		mGrid[lCurIdx] = getDirChar(lCurDir);
+	}
+	
+	return lObstaclesPos.size();
+}
+
+char Day6::getDirChar(EDir pDir)
+{
+	switch (pDir)
+	{
+	case EDir::UP:
+		return '^';
+	case EDir::RIGHT:
+		return '>';
+	case EDir::DOWN:
+		return 'v';
+	case EDir::LEFT:
+		return '<';
+	default:
+		std::cout << "ERROR\n";
+		return 'X';
+	}
 }
 
 bool Day6::getNextPosition(std::string const& pGrid, int& pCurIdx, EDir& pCurDir) const
@@ -54,7 +101,7 @@ bool Day6::getNextPosition(std::string const& pGrid, int& pCurIdx, EDir& pCurDir
 	{
 		return false;
 	}
-	else if (pGrid[lNextIdx] != '#')
+	else if (pGrid[lNextIdx] != '#' && pGrid[lNextIdx] != 'O')
 	{
 		pCurIdx = lNextIdx;
 	}
@@ -75,25 +122,38 @@ void Day6::travelGrid(std::string& pGrid) const
 
 	while (getNextPosition(pGrid, lCurIdx, lCurDir))
 	{
-		switch (lCurDir)
-		{
-		case EDir::UP:
-			pGrid[lCurIdx] = '^';
-			break;
-		case EDir::RIGHT:
-			pGrid[lCurIdx] = '>';
-			break;
-		case EDir::DOWN:
-			pGrid[lCurIdx] = 'v';
-			break;
-		case EDir::LEFT:
-			pGrid[lCurIdx] = '<';
-			break;
-		default:
-			std::cout << "ERROR\n";
-			break;
-		}
+		pGrid[lCurIdx] = getDirChar(lCurDir);
 	}
+}
+
+bool Day6::travelGridAndCheckLoop(std::string& pGrid, int pCurIdx, EDir pCurDir) const
+{
+	std::set<std::pair<int, EDir>> mPositions{};
+
+	int lNextIdx{ pCurIdx };
+	while (getNextPosition(pGrid, lNextIdx, pCurDir))
+	{
+		// If turn, check if it has already been taken
+		if (lNextIdx == pCurIdx)
+		{
+			auto lIt{ mPositions.find(std::pair<int, EDir>(pCurIdx, pCurDir)) };
+
+			// If this position and orientation has already been visited, return true
+			if (lIt != mPositions.end())
+			{
+				return true;
+			}
+			// Else, store it
+			else
+			{
+				mPositions.emplace(pCurIdx, pCurDir);
+			}
+		}
+
+		pCurIdx = lNextIdx;
+		pGrid[pCurIdx] = getDirChar(pCurDir);
+	}
+	return false;
 }
 
 inline size_t Day6::countVisited() const
@@ -105,3 +165,8 @@ inline size_t Day6::countVisited() const
 
 	return lUp + lRight + lDown + lLeft;
 }
+
+/*
+	-> 1846 too high
+	-> 1740 too high
+*/
